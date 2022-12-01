@@ -1,12 +1,18 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from math import *
+import pandas as pd
 with open('data.txt','r',encoding='utf-8') as fp:
     lines=fp.readlines()
 scores=[]
+datalist=[]
 for line in lines:
     score=line.split(' ')[-1]
     scores.append(float(score))
+    datalist.append([line.split(' ')[0],float(score)])
+datalist=pd.DataFrame(np.array(datalist))
+datalist.columns=['StuId','Score']
+datalist.to_csv('scores.csv',index=None)
 space=5 #直方图中5分划一段
 minimum=floor(min(scores))-floor(min(scores))%space
 maximum=ceil(max(scores))+space-ceil(max(scores))%space
